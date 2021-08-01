@@ -1,0 +1,27 @@
+spring:
+  profiles:
+    include:
+    - aws
+    - elasticsearch
+    - jwt
+
+elasticsearch:
+  index:
+    course:
+      name: course
+    user:
+      name: user
+
+cloud:
+  aws:
+    region:
+      auto: false
+      static: ap-northeast-2
+    stack:
+      auto: false
+    credentials:
+      instance-profile: false
+    s3:
+      bucket: 
+        user_image: farmfather-course-image
+        course_image: farmfather-course-image
