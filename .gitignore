@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### credentail files ###
+*-aws.yml
+*-elasticsearch.yml
+*-jwt.yml
