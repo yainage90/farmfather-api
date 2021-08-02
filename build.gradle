@@ -54,6 +54,10 @@ dependencies {
 
 	//elasticsearch test-container
 	testImplementation "org.testcontainers:elasticsearch:1.15.3"
+
+	//Bcrypt
+	implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
+
 }
 
 
