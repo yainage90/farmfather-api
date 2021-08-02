@@ -1,18 +1,19 @@
 package com.farmfather.farmfatherapi.auth.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.farmfather.farmfatherapi.auth.dto.LoginRequestDto;
 import com.farmfather.farmfatherapi.auth.dto.LoginResponseDto;
-import com.farmfather.farmfatherapi.auth.dto.LogoutResponseDto;
 import com.farmfather.farmfatherapi.auth.dto.RegisterRequestDto;
-import com.farmfather.farmfatherapi.auth.dto.RegisterResponseDto;
+import com.farmfather.farmfatherapi.auth.entity.CustomUserDetails;
 import com.farmfather.farmfatherapi.auth.service.AuthService;
-
+import com.farmfather.farmfatherapi.auth.service.JwtUserDetailsService;
+import com.farmfather.farmfatherapi.auth.service.JwtUtil;
+import com.farmfather.farmfatherapi.domain.user.dto.UserResponseDto;
+import com.farmfather.farmfatherapi.domain.user.exception.AlreadyExistEmailException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,23 +22,34 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class AuthController {
 
-	private final AuthService authService;
+    private final JwtUserDetailsService userDetailsService;
+    private final AuthService authService;
 
-	public ResponseEntity<RegisterResponseDto> register(RegisterRequestDto registerRequestDto) {
-		log.info("registerRequestDto=" + registerRequestDto);
-		RegisterResponseDto response = authService.register(registerRequestDto);
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
+    @PostMapping("/api/authenticate")
+    public ResponseEntity<LoginResponseDto> createAuthenticationToken(
+            @RequestBody LoginRequestDto loginRequestDto) throws Exception {
 
-	public ResponseEntity<LoginResponseDto> login(LoginRequestDto loginRequestDto) {
-		log.info("loginRequestDto=" + loginRequestDto);
-		LoginResponseDto response = authService.login(loginRequestDto);
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
+        authService.authenticate(loginRequestDto);
 
-	public ResponseEntity<LogoutResponseDto> logout(HttpServletRequest httpServletRequest) {
-		String jwt = httpServletRequest.getAttribute("userId").toString();
-		LogoutResponseDto response = authService.logout(jwt);
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
+        final CustomUserDetails userDetails = (CustomUserDetails) userDetailsService
+                .loadUserByUsername(loginRequestDto.getEmail());
+        final String jwt = JwtUtil.generateToken(userDetails);
+
+        return ResponseEntity.ok(new LoginResponseDto(userDetails.toUserResponseDto(), jwt));
+    }
+
+    @PostMapping("/api/register")
+    public ResponseEntity<UserResponseDto> register(
+            @RequestBody RegisterRequestDto registerRequestDto) throws Exception {
+
+        UserResponseDto response;
+        try {
+            response = authService.register(registerRequestDto);
+        } catch (AlreadyExistEmailException e) {
+            log.error("email already exists. email=" + registerRequestDto.getEmail(), e);
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        }
+        return ResponseEntity.ok(response);
+    }
+
 }

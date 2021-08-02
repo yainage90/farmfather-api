@@ -1,35 +1,47 @@
 package com.farmfather.farmfatherapi.auth.service;
 
 import com.farmfather.farmfatherapi.auth.dto.LoginRequestDto;
-import com.farmfather.farmfatherapi.auth.dto.LoginResponseDto;
-import com.farmfather.farmfatherapi.auth.dto.LogoutResponseDto;
 import com.farmfather.farmfatherapi.auth.dto.RegisterRequestDto;
-import com.farmfather.farmfatherapi.auth.dto.RegisterResponseDto;
-
+import com.farmfather.farmfatherapi.auth.entity.CustomUserDetails;
+import com.farmfather.farmfatherapi.domain.user.dto.UserResponseDto;
+import com.farmfather.farmfatherapi.domain.user.exception.AlreadyExistEmailException;
+import com.farmfather.farmfatherapi.domain.user.service.UserService;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
-
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 
 @Service
-@Slf4j
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-	@Override
-	public LoginResponseDto login(LoginRequestDto loginRequestDto) {
-		
-	}
+	private final AuthenticationManager authenticationManager;
+	private final UserService userService;
 
 	@Override
-	public LogoutResponseDto logout(String jwt) {
-		return null;
+	public void authenticate(LoginRequestDto loginRequestDto) throws Exception {
+		try {
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+					loginRequestDto.getEmail(), loginRequestDto.getPassword()));
+		} catch (DisabledException e) {
+			throw new Exception("USER_DISABLED", e);
+		} catch (BadCredentialsException e) {
+			throw new Exception("INVALID_CREDENTIALS", e);
+		}
 	}
 
 	@Override
-	public RegisterResponseDto register(RegisterRequestDto registerRequestDto) {
-		return null;
+	public UserResponseDto register(RegisterRequestDto registerRequestDto)
+			throws AlreadyExistEmailException {
+		CustomUserDetails user = new CustomUserDetails();
+		user.setEmail(registerRequestDto.getEmail());
+		user.setPassword(BCrypt.hashpw(registerRequestDto.getPassword(), BCrypt.gensalt()));
+		user.setNickName(registerRequestDto.getNickName());
+
+		return userService.save(user).toUserResponseDto();
 	}
 
-	private boolean isValidPassword(LoginRequestDto loginRequestDto) {
-
-	}
 }

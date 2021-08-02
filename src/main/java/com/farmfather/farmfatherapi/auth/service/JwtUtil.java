@@ -6,6 +6,7 @@ import java.util.Date;
 import com.farmfather.farmfatherapi.auth.exception.JwtException;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -25,12 +26,12 @@ public class JwtUtil {
 
     private static long EXPIRATION_TIME;
 
-    public static String generateToken(String userId) {
+    public static String generateToken(UserDetails userDetails) {
 
         Date now = new Date();
 
         return Jwts.builder()
-                    .setSubject(userId)
+                    .setSubject(userDetails.getUsername())
                     .setIssuedAt(now)
                     .setExpiration(new Date(now.getTime() + EXPIRATION_TIME))
                     .signWith(SignatureAlgorithm.HS256, Base64.getEncoder().encodeToString(JWT_SECRET.getBytes()))

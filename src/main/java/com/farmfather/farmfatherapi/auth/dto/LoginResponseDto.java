@@ -1,15 +1,14 @@
 package com.farmfather.farmfatherapi.auth.dto;
 
-import com.farmfather.farmfatherapi.auth.entity.CustomUser;
-
-import lombok.Builder;
+import com.farmfather.farmfatherapi.domain.user.dto.UserResponseDto;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-@Builder
 @ToString
 @Getter
+@RequiredArgsConstructor
 public class LoginResponseDto {
-	CustomUser user;
-	String jwt;
+	private final UserResponseDto user;
+	private final String jwt;
 }
