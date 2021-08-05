@@ -2,11 +2,14 @@ package com.farmfather.farmfatherapi.auth.service;
 
 import com.farmfather.farmfatherapi.auth.dto.LoginRequestDto;
 import com.farmfather.farmfatherapi.auth.dto.RegisterRequestDto;
-import com.farmfather.farmfatherapi.domain.user.dto.UserResponseDto;
+import com.farmfather.farmfatherapi.auth.dto.UserResponseDto;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface AuthService {
 
-	public void authenticate(LoginRequestDto loginRequestDto) throws Exception;
+	void authenticate(LoginRequestDto loginRequestDto) throws Exception;
 
-	public UserResponseDto register(RegisterRequestDto registerRequestDto);
+	UserResponseDto register(RegisterRequestDto registerRequestDto);
+
+	String uploadProfile(String id, MultipartFile thumbnailImage);
 }
