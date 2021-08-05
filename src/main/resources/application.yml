@@ -23,5 +23,5 @@ cloud:
       instance-profile: false
     s3:
       bucket: 
-        user_image: farmfather-course-image
-        course_image: farmfather-course-image
+        user_profile: farmfather-user-profile
+        course_thumbnail: farmfather-course-thumbnail
