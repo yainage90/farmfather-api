@@ -18,11 +18,11 @@ curl -XPUT 'http://ec2-13-209-181-246.ap-northeast-2.compute.amazonaws.com:9200/
 			"title": {
 				"type": "text"
 			},
-			"subTitle": {
-				"type": "text"
-			},
 			"mentorId": {
 				"type": "keyword"
+			},
+			"learns": {
+				"type": "text"
 			},
 			"status": {
 				"type": "keyword"
@@ -70,8 +70,67 @@ curl -XPUT 'http://ec2-13-209-181-246.ap-northeast-2.compute.amazonaws.com:9200/
 							},
 							"title": {
 								"type": "keyword"
+							},
+							"videoUrl": {
+								"type": "keyword"
 							}
 						}
+					}
+				}
+			},
+			"ratings": {
+				"type": "nested",
+				"properties": {
+					"id": {
+						"type": "keyword"
+					},
+					"writerId": {
+						"type": "keyword"
+					},
+					"writerNickName": {
+						"type": "keyword"
+					},
+					"star": {
+						"type": "integer"
+					},
+					"comment": {
+						"type": "keyword"
+					},
+					"created": {
+						"type": "date",
+						"format": "yyyy-MM-dd HH:mm:ss"
+					},
+					"updated": {
+						"type": "date",
+						"format": "yyyy-MM-dd HH:mm:ss"
+					}
+				}
+			},
+			"qnas": {
+				"type": "nested",
+				"properties": {
+					"id": {
+						"type": "keyword"
+					},
+					"title": {
+						"type": "text"
+					},
+					"writerId": {
+						"type": "keyword"
+					},
+					"writerNickName": {
+						"type": "keyword"
+					},
+					"question": {
+						"type": "keyword"
+					},
+					"created": {
+						"type": "date",
+						"format": "yyyy-MM-dd HH:mm:ss"
+					},
+					"updated": {
+						"type": "date",
+						"format": "yyyy-MM-dd HH:mm:ss"
 					}
 				}
 			}
@@ -106,7 +165,7 @@ curl -XPUT 'http://ec2-13-209-181-246.ap-northeast-2.compute.amazonaws.com:9200/
 			"introduce": {
 				"type": "text"
 			},
-			"image": {
+			"profile": {
 				"type": "keyword"
 			},
 			"favoriteCourses": {
