@@ -16,16 +16,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-	securedEnabled = true,
-	jsr250Enabled = true,
-	prePostEnabled = true
-)
+@EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -34,8 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
 	@Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
 	}
 
 	@Bean
@@ -50,13 +45,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
-        httpSecurity.csrf().disable()
-          .authorizeRequests().antMatchers("/api/register", "/api/authenticate", "/courses", "/course").permitAll()
-					.anyRequest().authenticated();
-				httpSecurity.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
-				httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-    }
+	protected void configure(HttpSecurity httpSecurity) throws Exception {
+		// httpSecurity.cors().configurationSource(request -> new
+		// CorsConfiguration().applyPermitDefaultValues());
+
+		httpSecurity.csrf().disable().authorizeRequests()
+				.antMatchers("/api/register", "/api/authenticate", "/api/course/**", "/api/user")
+				.permitAll().anyRequest().authenticated();
+		httpSecurity.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
+		httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		httpSecurity.addFilterBefore(jwtAuthenticationFilter,
+				UsernamePasswordAuthenticationFilter.class);
+	}
 }
