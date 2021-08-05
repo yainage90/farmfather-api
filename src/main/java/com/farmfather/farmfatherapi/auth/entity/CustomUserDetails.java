@@ -2,7 +2,7 @@ package com.farmfather.farmfatherapi.auth.entity;
 
 import java.util.Collection;
 import java.util.List;
-import com.farmfather.farmfatherapi.domain.user.dto.UserResponseDto;
+import com.farmfather.farmfatherapi.auth.dto.UserResponseDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import lombok.EqualsAndHashCode;
@@ -21,7 +21,7 @@ public class CustomUserDetails implements UserDetails {
 	private String nickName;
 	private String password;
 	private String introduce;
-	private String imageUrl;
+	private String profile;
 	private List<String> favoriteCourses;
 
 	@Override
@@ -60,7 +60,7 @@ public class CustomUserDetails implements UserDetails {
 	}
 
 	public UserResponseDto toUserResponseDto() {
-		return new UserResponseDto(getId(), getUsername(), getNickName(), getIntroduce(), getImageUrl(),
+		return new UserResponseDto(getId(), getUsername(), getNickName(), getIntroduce(), getProfile(),
 				getFavoriteCourses());
 	}
 }
