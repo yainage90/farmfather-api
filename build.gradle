@@ -11,7 +11,6 @@ sourceCompatibility = '11'
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
-		
 	}
 }
 
@@ -59,8 +58,6 @@ dependencies {
 	implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
 
 }
-
-
 
 dependencyManagement {
 	imports {
