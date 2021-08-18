@@ -1,4 +1,8 @@
-## 1. 엔드포인트(endpoint)
+# 1. 시스템 아키텍쳐
+
+![system_architecture](./images/system_architecture.jpg)
+
+# 2. 엔드포인트(endpoint)
 
 ### 1) auth(인증)
 
