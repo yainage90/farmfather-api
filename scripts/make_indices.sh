@@ -7,7 +7,7 @@ curl -XPUT 'http://ec2-13-209-181-246.ap-northeast-2.compute.amazonaws.com:9200/
 -d \
 '{
 	"settings": {
-		"number_of_shards": 3,
+		"number_of_shards": 1,
     "number_of_replicas": 1
 	},
 	"mappings": {
