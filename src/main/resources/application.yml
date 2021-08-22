@@ -11,6 +11,8 @@ elasticsearch:
       name: course
     user:
       name: user
+    post:
+      name: post
 
 cloud:
   aws:
