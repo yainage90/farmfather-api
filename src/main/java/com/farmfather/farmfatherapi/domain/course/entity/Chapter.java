@@ -1,4 +1,4 @@
-package com.farmfather.farmfatherapi.course.entity;
+package com.farmfather.farmfatherapi.domain.course.entity;
 
 import java.util.HashMap;
 import java.util.List;

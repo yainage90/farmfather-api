@@ -1,11 +1,11 @@
-package com.farmfather.farmfatherapi.course.controller;
+package com.farmfather.farmfatherapi.domain.course.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import com.farmfather.farmfatherapi.course.entity.Course;
-import com.farmfather.farmfatherapi.course.entity.Qna;
-import com.farmfather.farmfatherapi.course.entity.Rating;
-import com.farmfather.farmfatherapi.course.service.CourseService;
+import com.farmfather.farmfatherapi.domain.course.entity.Course;
+import com.farmfather.farmfatherapi.domain.course.entity.Qna;
+import com.farmfather.farmfatherapi.domain.course.entity.Rating;
+import com.farmfather.farmfatherapi.domain.course.service.CourseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

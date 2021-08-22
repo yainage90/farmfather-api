@@ -1,4 +1,4 @@
-package com.farmfather.farmfatherapi.course.service;
+package com.farmfather.farmfatherapi.domain.course.service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -10,9 +10,9 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import com.farmfather.farmfatherapi.cloud.s3.service.S3Service;
-import com.farmfather.farmfatherapi.course.entity.Course;
-import com.farmfather.farmfatherapi.course.entity.Qna;
-import com.farmfather.farmfatherapi.course.entity.Rating;
+import com.farmfather.farmfatherapi.domain.course.entity.Course;
+import com.farmfather.farmfatherapi.domain.course.entity.Qna;
+import com.farmfather.farmfatherapi.domain.course.entity.Rating;
 import com.farmfather.farmfatherapi.utils.EsRequestFactory;
 import com.google.gson.Gson;
 import org.elasticsearch.action.delete.DeleteRequest;

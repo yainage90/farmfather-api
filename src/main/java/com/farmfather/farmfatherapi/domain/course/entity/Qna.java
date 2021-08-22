@@ -1,17 +1,16 @@
-package com.farmfather.farmfatherapi.course.entity;
+package com.farmfather.farmfatherapi.domain.course.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Rating {
-
+public class Qna {
 	private String id;
+	private String title;
 	private String writerId;
 	private String writerNickName;
-	private int star;
-	private String comment;
+	private String question;
 	private String created;
 	private String updated;
 }

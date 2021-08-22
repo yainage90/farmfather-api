@@ -1,9 +1,9 @@
-package com.farmfather.farmfatherapi.course.service;
+package com.farmfather.farmfatherapi.domain.course.service;
 
 import java.util.List;
-import com.farmfather.farmfatherapi.course.entity.Course;
-import com.farmfather.farmfatherapi.course.entity.Qna;
-import com.farmfather.farmfatherapi.course.entity.Rating;
+import com.farmfather.farmfatherapi.domain.course.entity.Course;
+import com.farmfather.farmfatherapi.domain.course.entity.Qna;
+import com.farmfather.farmfatherapi.domain.course.entity.Rating;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface CourseService {
