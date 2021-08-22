@@ -211,6 +211,14 @@ curl -XPUT 'http://ec2-13-209-181-246.ap-northeast-2.compute.amazonaws.com:9200/
 			"content": {
 				"type": "text",
 				"analyzer": "whitespace"
+			},
+			"created": {
+				"type": "date",
+				"format": "yyyy-MM-dd HH:mm:ss"
+			},
+			"updated": {
+				"type": "date",
+				"format": "yyyy-MM-dd HH:mm:ss"
 			}
 		}
 	}
