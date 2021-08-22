@@ -40,7 +40,9 @@ public class EsRequestFactory {
 		searchSourceBuilder.query(QueryBuilders.matchAllQuery());
 		searchSourceBuilder.from(from);
 		searchSourceBuilder.size(size);
-		searchSourceBuilder.fetchSource(fieldsToInclude, fieldsToExclude);
+		if (fieldsToInclude != null || fieldsToExclude != null) {
+			searchSourceBuilder.fetchSource(fieldsToInclude, fieldsToExclude);
+		}
 
 		request.source(searchSourceBuilder);
 
