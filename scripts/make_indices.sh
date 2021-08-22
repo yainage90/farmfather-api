@@ -145,7 +145,7 @@ curl -XPUT 'http://ec2-13-209-181-246.ap-northeast-2.compute.amazonaws.com:9200/
 -d \
 '{
 	"settings": {
-		"number_of_shards": 3,
+		"number_of_shards": 1,
     "number_of_replicas": 1
 	},
 	"mappings": {
@@ -180,3 +180,38 @@ curl -XPUT 'http://ec2-13-209-181-246.ap-northeast-2.compute.amazonaws.com:9200/
 	}
 }'
 
+#post
+curl -XPUT 'http://ec2-13-209-181-246.ap-northeast-2.compute.amazonaws.com:9200/post?pretty' \
+-u "${ES_USER}:${ES_PASSWORD}" \
+-H 'Content-Type: application/json' \
+-d \
+'{
+	"settings": {
+		"number_of_shards": 1,
+    "number_of_replicas": 1
+	},
+	"mappings": {
+		"properties": {
+			"id": {
+				"type": "keyword"
+			},
+			"writerId": {
+				"type": "keyword"
+			},
+			"writerNickName": {
+				"type": "keyword"
+			},
+			"title": {
+				"type": "text",
+				"analyzer": "whitespace"
+			},
+			"category": {
+				"type": "keyword"
+			},
+			"content": {
+				"type": "text",
+				"analyzer": "whitespace"
+			}
+		}
+	}
+}'
