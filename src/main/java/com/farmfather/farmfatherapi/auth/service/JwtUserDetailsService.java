@@ -43,7 +43,8 @@ public class JwtUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		SearchRequest request = EsRequestFactory.createSearchByFieldRequest(USER_INDEX, "email", email);
+		SearchRequest request =
+				EsRequestFactory.createSearchByFieldRequest(USER_INDEX, "email", email, 0, 1);
 
 		SearchResponse response;
 		try {
