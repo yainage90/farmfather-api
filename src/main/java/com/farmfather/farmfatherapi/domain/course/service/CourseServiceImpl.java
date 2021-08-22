@@ -74,8 +74,8 @@ public class CourseServiceImpl implements CourseService {
 				new String[] {"id", "title", "thumbnail", "starAvg", "mentorId", "status"};
 		String[] fieldsToExclude = new String[] {"chapters", "ratings", "qnas", "numRating", "price",
 				"register", "created", "updated"};
-		SearchRequest request =
-				EsRequestFactory.createSearchAllRequest(COURSE_INDEX, fieldsToInclude, fieldsToExclude);
+		SearchRequest request = EsRequestFactory.createSearchAllRequest(COURSE_INDEX, fieldsToInclude,
+				fieldsToExclude, 0, 1000);
 
 		SearchResponse response;
 		try {
@@ -136,7 +136,7 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public List<Course> getMyCourses(String mentorId) {
 		SearchRequest request =
-				EsRequestFactory.createSearchByFieldRequest(COURSE_INDEX, "mentorId", mentorId);
+				EsRequestFactory.createSearchByFieldRequest(COURSE_INDEX, "mentorId", mentorId, 0, 100);
 
 		SearchResponse response;
 		try {
