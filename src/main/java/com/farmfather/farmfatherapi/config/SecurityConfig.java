@@ -2,9 +2,11 @@ package com.farmfather.farmfatherapi.config;
 
 import com.farmfather.farmfatherapi.auth.filter.JwtAuthenticationEntryPoint;
 import com.farmfather.farmfatherapi.auth.filter.JwtAuthenticationFilter;
+import com.farmfather.farmfatherapi.auth.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -54,13 +56,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable();
 		httpSecurity.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
 		httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		httpSecurity.addFilterBefore(new JwtAuthenticationFilter(),
+		httpSecurity.addFilterBefore(
+				new JwtAuthenticationFilter((JwtUserDetailsService) jwtUserDetailsService),
 				UsernamePasswordAuthenticationFilter.class);
 	}
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/api/course/all", "/api/post/all");
+		web.ignoring().antMatchers(HttpMethod.GET, "/api/course/**", "/api/post/**");
 	}
 
 }
