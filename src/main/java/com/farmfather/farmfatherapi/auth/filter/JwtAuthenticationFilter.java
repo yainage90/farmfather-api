@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.farmfather.farmfatherapi.auth.exception.JwtException;
 import com.farmfather.farmfatherapi.auth.service.JwtUserDetailsService;
 import com.farmfather.farmfatherapi.utils.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,8 +21,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-	@Autowired
 	private JwtUserDetailsService jwtUserDetailsService;
+
+	public JwtAuthenticationFilter(JwtUserDetailsService jwtUserDetailsService) {
+		this.jwtUserDetailsService = jwtUserDetailsService;
+	}
 
 	@Override
 	public void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
