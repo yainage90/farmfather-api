@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import com.farmfather.farmfatherapi.domain.community.entity.Post;
 import com.farmfather.farmfatherapi.utils.EsRequestFactory;
 import com.google.gson.Gson;
+import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
@@ -192,7 +193,15 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public String delete(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		DeleteRequest request = EsRequestFactory.createDeleteByIdRequest(POST_INDEX, id);
+
+		try {
+			esClient.delete(request, RequestOptions.DEFAULT);
+		} catch (IOException e) {
+			log.error("IOException occured.");
+			return null;
+		}
+
+		return id;
 	}
 }
